@@ -1,0 +1,5 @@
+# Task 5: Short analysis
+
+**(a) Process states.** When I run `python tracker.py`, the process is *created* (New), placed in the *Ready* queue, and then given the CPU so it becomes *Running*. When the program reaches `input()`, it cannot continue until I type something, so the operating system moves it to the *Waiting* (Blocked) state. Once I press Enter, it returns to *Ready*, runs again, and finally reaches *Terminated* when the program exits. So while waiting for `input()`, the program is in the **Waiting (Blocked)** state.
+
+**(b) Cloud hosting.** I would choose **PaaS** (for example Render, Heroku or Google App Engine). The tool is a small Python program that 200 students will use through a browser. With PaaS, I only upload my code (wrapped in a simple web framework such as Flask), while the provider manages the servers, operating system, security patches and scaling. IaaS would force me to set up and maintain a virtual machine, which is unnecessary work for a small project. SaaS would give a ready-made product, so I could not run my own custom tracker. PaaS is also cheap and suits a placement cell with no dedicated system administrator.
