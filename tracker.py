@@ -45,5 +45,52 @@ def add_student(student_list):
     print(f"Added {name} ({roll_no}).")
 
 
-add_student(students)
-print(f"Total students: {len(students)}")
+# ---------------------------------------------------------------------------
+# Task 2: functions
+# ---------------------------------------------------------------------------
+def average(student):
+    """Return the mean of the three scores."""
+    return (student["aptitude"] + student["verbal"] + student["coding"]) / 3
+
+
+def grade(avg):
+    """A for 80+, B for 60+, C for 40+, otherwise 'Needs practice'."""
+    if avg >= 80:
+        return "A"
+    if avg >= 60:
+        return "B"
+    if avg >= 40:
+        return "C"
+    return "Needs practice"
+
+
+def print_table(student_list):
+    """Print a neatly formatted result table using a loop."""
+    header = (
+        f"{'Roll No':<9}{'Name':<16}{'Apt':>5}{'Verbal':>8}"
+        f"{'Coding':>8}{'Avg':>8}  Grade"
+    )
+    print(header)
+    print("-" * (len(header) + 12))
+    for s in student_list:
+        avg = average(s)
+        print(
+            f"{s['roll_no']:<9}{s['name']:<16}{s['aptitude']:>5}{s['verbal']:>8}"
+            f"{s['coding']:>8}{avg:>8.2f}  {grade(avg)}"
+        )
+
+
+def main():
+    print("=== Placement Readiness Tracker ===\n")
+
+    print("Add a new student")
+    add_student(students)
+    while input("\nAdd another student? (y/n): ").strip().lower() == "y":
+        add_student(students)
+
+    print("\n--- Result table ---")
+    print_table(students)
+
+
+if __name__ == "__main__":
+    main()
