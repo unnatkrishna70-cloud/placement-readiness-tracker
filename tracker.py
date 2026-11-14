@@ -45,5 +45,74 @@ def add_student(student_list):
     print(f"Added {name} ({roll_no}).")
 
 
-add_student(students)
-print(f"Total students: {len(students)}")
+# ---------------------------------------------------------------------------
+# Task 2: functions
+# ---------------------------------------------------------------------------
+def average(student):
+    """Return the mean of the three scores."""
+    return (student["aptitude"] + student["verbal"] + student["coding"]) / 3
+
+
+def grade(avg):
+    """A for 80+, B for 60+, C for 40+, otherwise 'Needs practice'."""
+    if avg >= 80:
+        return "A"
+    if avg >= 60:
+        return "B"
+    if avg >= 40:
+        return "C"
+    return "Needs practice"
+
+
+def top_scorer(student_list):
+    """Return the student with the highest average."""
+    return max(student_list, key=average)
+
+
+def needs_practice(student_list, limit=40):
+    """Return the students whose average is below `limit`."""
+    return [s for s in student_list if average(s) < limit]
+
+
+def print_table(student_list):
+    """Print a neatly formatted result table using a loop."""
+    header = (
+        f"{'Roll No':<9}{'Name':<16}{'Apt':>5}{'Verbal':>8}"
+        f"{'Coding':>8}{'Avg':>8}  Grade"
+    )
+    print(header)
+    print("-" * (len(header) + 12))
+    for s in student_list:
+        avg = average(s)
+        print(
+            f"{s['roll_no']:<9}{s['name']:<16}{s['aptitude']:>5}{s['verbal']:>8}"
+            f"{s['coding']:>8}{avg:>8.2f}  {grade(avg)}"
+        )
+
+
+def main():
+    print("=== Placement Readiness Tracker ===\n")
+
+    print("Add a new student")
+    add_student(students)
+    while input("\nAdd another student? (y/n): ").strip().lower() == "y":
+        add_student(students)
+
+    print("\n--- Result table ---")
+    print_table(students)
+
+    best = top_scorer(students)
+    print(f"\nTop scorer: {best['name']} ({best['roll_no']}) "
+          f"with an average of {average(best):.2f}")
+
+    weak = needs_practice(students)
+    print("\nStudents who need extra practice (average below 40):")
+    if weak:
+        for s in weak:
+            print(f"  - {s['name']} ({s['roll_no']}): {average(s):.2f}")
+    else:
+        print("  None - everyone is on track!")
+
+
+if __name__ == "__main__":
+    main()
